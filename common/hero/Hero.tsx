@@ -10,9 +10,12 @@ export default function Hero() {
       <div className="hero-content text-center">
         <div className="max-w-md">
           {user?.isLoggedIn ? (
-            <h1 className="text-5xl font-bold">
-              Hello there, {user?.username}! 🤗
-            </h1>
+            <div className="flex text-5xl font-bold">
+              <span>
+                Hello there,&nbsp;{" "}
+                <span className="text-[#552794]">{user?.username}</span>! 🤗
+              </span>
+            </div>
           ) : (
             <div className="text-5xl font-bold">
               Welcome to the AA demo dapp!
