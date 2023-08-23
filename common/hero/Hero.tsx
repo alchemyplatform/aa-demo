@@ -2,7 +2,7 @@ import { useAuth } from "@common/auth/AuthProvider";
 import { useRouter } from "next/navigation";
 
 export default function Hero() {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
 
   return (
@@ -19,27 +19,31 @@ export default function Hero() {
             </div>
           )}
 
-          <p className="py-6">This application uses:</p>
+          <p className="mt-2 py-6">This application uses:</p>
           <ul>
             <li>Userbase</li>
             <li>Tailwind CSS</li>
             <li>DaisyUI</li>
             <li>Typescript</li>
           </ul>
-          <div className="mt-12 flex flex-col justify-between gap-4">
-            <button
-              onClick={() => router.push("/sign-up")}
-              className="btn bg-[#445dea] text-white"
-            >
-              Sign Up
-            </button>
-            <button
-              onClick={() => router.push("/login")}
-              className="btn bg-[#6ed09f] text-white "
-            >
-              Login
-            </button>
-          </div>
+          {user?.isLoggedIn ? (
+            ""
+          ) : (
+            <div className="mt-10 flex flex-col justify-between gap-4">
+              <button
+                onClick={() => router.push("/sign-up")}
+                className="btn bg-[#445dea] text-white"
+              >
+                Sign Up
+              </button>
+              <button
+                onClick={() => router.push("/login")}
+                className="btn bg-[#6ed09f] text-white"
+              >
+                Login
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

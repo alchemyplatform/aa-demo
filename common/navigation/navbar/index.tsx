@@ -53,7 +53,7 @@ export default function Navbar() {
             {!isOnLoginPage ? (
               <button
                 onClick={() => router.push("/login")}
-                className="btn btn-primary"
+                className="btn btn-primary bg-[#6ed09f]"
               >
                 Login
               </button>
@@ -62,9 +62,6 @@ export default function Navbar() {
                 Logged In
               </button>
             )}
-            {/* <Link href={"/sign-up"}>
-              <div className="btn">Sign Up</div>
-            </Link> */}
           </div>
         )}
 
@@ -92,9 +89,13 @@ export default function Navbar() {
             <li>
               <a>Settings</a>
             </li>
-            <li onClick={handleLogout}>
-              <a>Logout</a>
-            </li>
+            {user?.isLoggedIn ? (
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>

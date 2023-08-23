@@ -1,6 +1,8 @@
 "use client";
 // components/SignupForm.js
 import { useAuth } from "@common/auth/AuthProvider";
+import ToastComponent from "@common/utils/Toast";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import userbase from "userbase-js";
 import "../globals.css";
@@ -15,7 +17,7 @@ export default function SignupForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  console.log(user);
+  const router = useRouter();
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
@@ -29,8 +31,10 @@ export default function SignupForm() {
         username: username,
         isLoggedIn: true,
       };
+      <ToastComponent message="Sign up... success!" status="success" />;
       login(userInfo);
       console.log("Signed up: " + user);
+      router.push("/");
     } catch (error: any) {
       setError(error.message || "An unexpected error occurred.");
       console.error(error);
