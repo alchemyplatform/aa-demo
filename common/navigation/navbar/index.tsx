@@ -1,7 +1,8 @@
 "use client";
 
 import { useAuth } from "@common/auth/AuthProvider";
-import { Hashicon } from "@emeraldpay/hashicon-react";
+import gonPfp from "@public/assets/gon_freecs.png";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import userbase from "userbase-js";
@@ -70,11 +71,12 @@ export default function Navbar() {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              {user?.username ? (
+              {/* {user?.username ? (
                 <Hashicon value={user?.username} />
               ) : (
                 <Hashicon value={"Not logged in."} />
-              )}
+              )} */}
+              <Image src={gonPfp} alt="gon-freecs" />
             </div>
           </label>
           <ul

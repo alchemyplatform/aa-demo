@@ -15,8 +15,6 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  console.log(user);
-
   useEffect(() => {
     if (user?.isLoggedIn) {
       router.push("/");
