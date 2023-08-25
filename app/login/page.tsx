@@ -37,7 +37,7 @@ export default function LoginForm() {
       login(userInfo);
       // deploySCW();
       // CREATE 2 deterministic addres gen?
-      router.push("/");
+      router.push("/?login=success");
       console.log(`Userbase login succesful. ✅ Welcome, ${username}!`);
     } catch (error: any) {
       setIsLoading(false);
