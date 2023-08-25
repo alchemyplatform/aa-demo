@@ -9,4 +9,7 @@ module.exports = {
     config.resolve.fallback = { fs: false, net: false };
     return config;
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };

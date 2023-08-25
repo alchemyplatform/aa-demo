@@ -6,10 +6,10 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const privKey = secp.utils.randomPrivateKey();
-  const privKeyHex = secp.etc.bytesToHex(privKey);
+  // const privKeyHex = secp.etc.bytesToHex(privKey);
 
-  const { username, password, userbase } = body;
-  console.log(userbase);
+  // const { username, password, userbase } = body;
+  // console.log(userbase);
 
   console.log("hello from the server");
 
