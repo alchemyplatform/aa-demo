@@ -11,9 +11,9 @@
   "dependencies": {
     "@babel/core": ">=7.0.0 <8.0.0",
     "@emeraldpay/hashicon-react": "^0.5.2",
+    "@noble/secp256k1": "^2.0.0",
     "@types/node": "20.2.5",
     "@types/react-dom": "18.2.4",
-    "autoprefixer": "^10.4.15",
     "connectkit": "^1.4.0",
     "encoding": "^0.1.13",
     "eslint-config-next": "13.4.4",
@@ -21,7 +21,6 @@
     "lokijs": "^1.5.12",
     "next": "13.4.4",
     "pino-pretty": "^10.0.0",
-    "postcss": "^8.4.28",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": ">= 16.8.0",
@@ -35,9 +34,11 @@
     "@types/react": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
-    "daisyui": "^3.5.1",
+    "autoprefixer": "^10.4.15",
+    "daisyui": "^3.6.1",
     "eslint": "8.47.0",
     "eslint-plugin-react": "^7.33.2",
+    "postcss": "^8.4.28",
     "tailwindcss": "^3.3.3"
   }
 }
