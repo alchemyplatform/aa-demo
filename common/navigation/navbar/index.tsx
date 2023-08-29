@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@common/auth/AuthProvider";
+import alchemyLogo from "@public/assets/alchemy-logo.svg";
 import gonPfp from "@public/assets/gon_freecs.png";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,14 +37,22 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100 font-mono bg-[#232939]">
+    <div className="navbar bg-base-100 font-mono bg-[#232939] h-12">
       <div className="flex-1">
-        <button
+        {/* <button
           onClick={() => router.push("/")}
           className="btn btn-ghost normal-case text-xl text-white"
         >
           Alchemy Demo Dapp
-        </button>
+        </button> */}
+        <Image
+          onClick={() => router.push("/")}
+          className="ml-1.5 cursor-pointer"
+          width={164}
+          height={100}
+          src={alchemyLogo}
+          alt="logo"
+        />
       </div>
       <div className="flex gap-2">
         {user?.isLoggedIn ? (
@@ -53,14 +62,12 @@ export default function Navbar() {
             {!isOnLoginPage ? (
               <button
                 onClick={() => router.push("/login")}
-                className="btn btn-primary bg-[#6ed09f]"
+                className="btn hover:bg-[#4f6fdb] bg-[#324996] text-white"
               >
                 Login
               </button>
             ) : (
-              <button className="btn btn-primary" disabled>
-                Logged In
-              </button>
+              <button className="btn btn-primary">Logged In</button>
             )}
           </div>
         )}

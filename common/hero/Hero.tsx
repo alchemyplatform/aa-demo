@@ -44,7 +44,7 @@ export default function Hero({ showToast, toastMessage }: any) {
                 </button>
                 <button
                   onClick={() => router.push("/login")}
-                  className="btn bg-[#6ed09f] text-white"
+                  className="btn bg-[#324996] text-white"
                 >
                   Login
                 </button>
@@ -64,13 +64,4 @@ export default function Hero({ showToast, toastMessage }: any) {
       </div>
     </div>
   );
-}
-function startWindToast(
-  arg0: string,
-  arg1: string,
-  arg2: string,
-  arg3: number,
-  arg4: string
-) {
-  throw new Error("Function not implemented.");
 }

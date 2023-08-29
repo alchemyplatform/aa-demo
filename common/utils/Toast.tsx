@@ -6,7 +6,7 @@ export default function Toast({ message }: any) {
     <>
       <div
         id="toast-success"
-        className="flex items-center w-full max-w-xs p-8 mb-4 text-black bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+        className="flex items-center w-full max-w-xs p-8 mb-4 text-black bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 bg-secondary"
         role="alert"
       >
         <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
@@ -21,7 +21,7 @@ export default function Toast({ message }: any) {
           </svg>
           <span className="sr-only">Check icon</span>
         </div>
-        <span className="ml-3 text-xl font-normal text-black">
+        <span className="ml-3 text-xl font-normal text-white">
           Success! Welcome, <b>{user?.username}</b>
         </span>
         <button
