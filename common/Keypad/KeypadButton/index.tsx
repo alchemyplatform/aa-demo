@@ -8,7 +8,7 @@ interface KeypadButtonProps {
 const KeypadButton: React.FC<KeypadButtonProps> = ({ onClick, num }) => {
   return (
     <button
-      className="h-full w-full rounded-2xl border-2 border-[#64748B] active:bg-[#64748B] active:text-white bg-[] text- text-lg font-bold hover:bg-[#eef8ff] m-1"
+      className="h-[75px] w-[75px] rounded-2xl border-2 border-[#64748B] active:bg-[#64748B] active:text-white text-lg font-bold hover:bg-[#eef8ff] mx-[2px]"
       onClick={() => onClick(num)}
     >
       {num}
