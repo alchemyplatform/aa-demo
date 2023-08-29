@@ -1,5 +1,4 @@
 "use client";
-import HomeView from "@common/paayHome";
 import React, { use, useEffect, useState } from "react";
 import { useAuth } from "@common/auth/AuthProvider";
 import "../globals.css";
@@ -13,16 +12,17 @@ const STATUS_SENDING = "sending";
 const STATUS_CONFIRMED = "confirmed";
 
 const SendScreen = () => {
-  const { user } = useAuth();
+  const [amount, setAmount] = useState("");
+  const [balance, setBalance] = useState(106);
+  const [hash, setHash] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [to, setTo] = useState("");
-  const [amount, setAmount] = useState("");
-  const [status, setStatus] = useState(STATUS_NONE);
-  const [balance, setBalance] = useState(106);
-  const [hash, setHash] = useState("");
+  const { user } = useAuth();
 
-  /* Helper functions */
+  const [status, setStatus] = useState(STATUS_NONE);
+
+  /**************************** Helper functions *****************************/
   const textHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value);
   };
@@ -44,8 +44,7 @@ const SendScreen = () => {
     setAmount("");
   };
 
-  /****** Step handler functions below. One for each modal button click ******/
-
+  /********* Step handler functions. One for each modal button click *********/
   // Strips text input and sets as destination address for transaction.
   const selectUser = () => {
     const res = search.startsWith("0x") ? search.slice(2) : search;
@@ -127,7 +126,7 @@ const SendScreen = () => {
               className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
-            <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-2/3">
+            <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-2/3 overflow-scroll">
               <h1 className="text-xl font-semibold">Choose amount</h1>
               <div className="flex flex-col flex-1 items-center">
                 <input
@@ -248,18 +247,45 @@ const SendScreen = () => {
     );
   };
 
+  interface HomeViewProps {
+    balance: number;
+    showModal: () => void;
+  }
+  const HomeView: React.FC<HomeViewProps> = ({ balance, showModal }) => {
+    return (
+      <div className="flex flex-col items-center">
+        <div className="flex-row justify-center items-center">
+          <h1 className="text-5xl font-bold">{balance}</h1>
+        </div>
+        <p className="text-xl font-bold">Alchemy PAAY Balance</p>
+        {!modalVisible}
+        <input
+          className="btn btn-primary my-3"
+          type="submit"
+          value="Send Tokens"
+          onClick={showModal}
+        />
+      </div>
+    );
+  };
+
   return (
     // Render
     <div className="display flex flex-col min-h-screen bg-base-200 justify-center items-center mt-[-48px] font-mono">
       {user?.isLoggedIn ? (
         modalVisible ? (
           renderModal()
-        ) : (
-          renderHome()
-        )
+        ) : null
       ) : (
         <h1 className="text-5xl font-bold">Log in to use PAAY!</h1>
       )}
+      <HomeView
+        balance={balance}
+        showModal={() => {
+          setModalVisible(true);
+          setStatus(STATUS_SEARCH);
+        }}
+      />
     </div>
   );
 };
