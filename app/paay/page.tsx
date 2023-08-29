@@ -1,9 +1,9 @@
 "use client";
-import HomeView from "@common/paay-home";
+import HomeView from "@common/paayHome";
 import React, { use, useEffect, useState } from "react";
 import { useAuth } from "@common/auth/AuthProvider";
 import "../globals.css";
-import Keypad from "@common/Keypad";
+import Keypad from "@common/keypad";
 
 const STATUS_NONE = "none";
 const STATUS_SEARCH = "search";
@@ -103,7 +103,7 @@ const SendScreen = () => {
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/2 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4">
-              <p className="text-xl font-semibold">Send to</p>
+              <h1 className="text-xl font-semibold">Send to</h1>
               <p className="text-sm text-gray-600 ml-3 mr-3">
                 Type in your friend's address!
               </p>
@@ -163,7 +163,7 @@ const SendScreen = () => {
               <h1 className="text-xl font-semibold">Confirm Tx</h1>
               <div className="min-h-[200px] flex flex-col justify-between">
                 <div className="flex flex-1 flex-row items-center justify-between bg-slate-100 rounded-lg m-2 pl-3 pr-3">
-                  <span>To: </span>
+                  <p>To: </p>
                   <a
                     href={`https://etherscan.io/address/${to}`}
                     className={"underline"}

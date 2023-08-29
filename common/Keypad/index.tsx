@@ -1,4 +1,4 @@
-import KeypadButton from "@common/Keypad/KeypadButton";
+import KeypadButton from "@common/keypad/keypadButton";
 
 interface KeypadProps {
   onClick: (num: string) => void;
