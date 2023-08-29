@@ -44,6 +44,12 @@ export default function Navbar() {
         >
           Alchemy Demo Dapp
         </button>
+        <button
+          onClick={() => router.push("paay")}
+          className="btn btn-ghost normal-case text-xl text-gray-300"
+        >
+          PAAY
+        </button>
       </div>
       <div className="flex gap-2">
         {user?.isLoggedIn ? (
