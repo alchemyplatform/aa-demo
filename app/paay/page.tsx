@@ -13,21 +13,18 @@ const STATUS_SENDING = "sending";
 const STATUS_CONFIRMED = "confirmed";
 
 const SendScreen = () => {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
+  const [search, setSearch] = useState("");
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState(STATUS_NONE);
-  const [balance, setBalance] = useState(80);
-  const [pagekey, setpagekey] = useState("");
+  const [balance, setBalance] = useState(106);
   const [hash, setHash] = useState("");
 
-  useEffect(() => {
-    console.log("status: " + status);
-  }, [status]);
-
+  /* Helper functions */
   const textHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    setTo(event.currentTarget.value);
+    setSearch(event.currentTarget.value);
   };
 
   const amountHandler = (event: React.FormEvent<HTMLInputElement>) => {
@@ -35,62 +32,61 @@ const SendScreen = () => {
   };
 
   const keypadHandler = (num: string) => {
-    console.log("pressed: " + num);
     setAmount(amount === "" ? num : amount + num);
   };
 
-  useEffect(() => {
-    console.log(to.length);
-  });
-
-  // Selects user to send to from the text input.
-  const selectUser = () => {
-    setStatus(STATUS_CHOOSE_AMOUNT);
-  };
-
-  /* Builds transaction object.
-   * Check amount against balance here.
-   */
-  const chooseAmount = () => {
-    setAmount(amount);
-    setStatus(STATUS_CONFIRM);
-  };
-
-  // Called when user confirms transaction.
-  // Sending transaction user op will go here.
-  const confirmTx = async () => {
-    setStatus(STATUS_SENDING);
-    const recipientAdress = to;
-    console.log("address: " + to);
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-    await sleep(2500);
-
-    // --------- Create the transaction object and send to userOp handler ----------
-    // const payment: TransactionContext = {
-    //   passkeyProvider: walletProivder,
-    //   tokenAddress: "0x4c1A52719d507827F8A3353bD0Aaf85BCc5Ce9a9", // test MATIC
-    //   recipientAddress: `0x${walletAddress}`, // Gareth boutta be rich
-    //   amount: parseEther(`${parseFloat(amount)}`),
-    // };
-    // const hash = await sendSponsoredTransaction(payment);
-    finishTx("");
-  };
-
-  /* SHOWS FINAL MODAL VIEW.
-   * DO ANY TX CLEANUP AND RESPONSE HANDLING HERE.
-   */
-  const finishTx = (hash: string) => {
-    setHash(hash);
-    setStatus(STATUS_CONFIRMED);
-  };
-
-  // Close modal and resets state.
+  // Closes modal and resets state.
   const closeModal = () => {
     setModalVisible(false);
     setStatus(STATUS_NONE);
     setHash("");
     setTo("");
     setAmount("");
+  };
+
+  /****** Step handler functions below. One for each modal button click ******/
+
+  // Strips text input and sets as destination address for transaction.
+  const selectUser = () => {
+    const res = search.startsWith("0x") ? search.slice(2) : search;
+    setTo(res);
+    setStatus(STATUS_CHOOSE_AMOUNT);
+  };
+
+  // Selects amount for transaction.
+  // Balance checking logic with smart-contract here.
+  const chooseAmount = () => {
+    setAmount(amount);
+    setStatus(STATUS_CONFIRM);
+  };
+
+  // Called when user confirms transaction.
+  // Call to send user op function here.
+  const confirmTx = async () => {
+    setStatus(STATUS_SENDING);
+    const recipientAdress = to;
+
+    // Sleeping to demonstrate loading view. Delete when tx implemented.
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    await sleep(1000);
+
+    // --------- Create the transaction object and send to userOp handler -----
+    // const payment: TransactionContext = {
+    //   passkeyProvider: walletProvider,
+    //   tokenAddress: "0x4c1A52719d507827F8A3353bD0Aaf85BCc5Ce9a9", // Address of token to send
+    //   recipientAddress: `0x${recipientAddress}`, // Gareth boutta be rich
+    //   amount: parseEther(`${parseFloat(amount)}`),
+    // };
+    // const hash = await sendSponsoredTransaction(payment);
+
+    finishTx("hash");
+  };
+
+  // Do any transaction status handling here, right now just sets hash for
+  // Etherscan link.
+  const finishTx = (hash: string) => {
+    setHash(hash);
+    setStatus(STATUS_CONFIRMED);
   };
 
   const renderModal = () => {
@@ -112,8 +108,9 @@ const SendScreen = () => {
                 type="text"
                 placeholder="Search by address"
                 onChange={textHandler}
+                value={search}
               />
-              {to.length === 0 ? (
+              {search.length === 0 ? (
                 <button className="btn btn-disabled">Select</button>
               ) : (
                 <button className="btn btn-primary" onClick={selectUser}>
