@@ -94,7 +94,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/2 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4">
@@ -123,7 +123,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-2/3 overflow-scroll">
@@ -152,7 +152,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/2 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-auto">
@@ -185,7 +185,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-1/4">
@@ -197,7 +197,7 @@ const SendScreen = () => {
                 href={`https://etherscan.io/address/${to}`}
                 className={"underline"}
               >
-                {to}
+                {`0x${to}`}
               </a>
               <div className="flex flex-1 items-center justify-center">
                 <div className="flex justify-self-center w-14 h-14 rounded-full animate-spin border-2 border-solid border-blue-500 border-t-transparent" />
@@ -209,7 +209,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#999ea2] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/4 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-1/4">
@@ -234,19 +234,6 @@ const SendScreen = () => {
     }
   };
 
-  // Passes down setState so send button shows modal.
-  const renderHome = () => {
-    return (
-      <HomeView
-        balance={balance}
-        showModal={() => {
-          setStatus(STATUS_SEARCH);
-          setModalVisible(true);
-        }}
-      />
-    );
-  };
-
   interface HomeViewProps {
     balance: number;
     showModal: () => void;
@@ -258,13 +245,29 @@ const SendScreen = () => {
           <h1 className="text-5xl font-bold">{balance}</h1>
         </div>
         <p className="text-xl font-bold">Alchemy PAAY Balance</p>
-        {!modalVisible}
         <input
           className="btn btn-primary my-3"
           type="submit"
           value="Send Tokens"
           onClick={showModal}
         />
+        <div className="w-1/3">
+          <p className="font-semibold">What is PAAY?</p>
+          <p className="text-justify">
+            PAAY uses [brief explanation of the functions used by paay with
+            links to their documentation.]
+          </p>
+          <br></br>
+          <p>
+            <a
+              href="https://docs.alchemy.com/reference/account-abstraction-sdk"
+              className="text-[#445dea]"
+            >
+              Click here
+            </a>{" "}
+            to read more about the AA SDK and begin building!
+          </p>
+        </div>
       </div>
     );
   };
@@ -273,19 +276,40 @@ const SendScreen = () => {
     // Render
     <div className="display flex flex-col min-h-screen bg-base-200 justify-center items-center mt-[-48px] font-mono">
       {user?.isLoggedIn ? (
-        modalVisible ? (
-          renderModal()
-        ) : null
+        <>
+          {modalVisible && renderModal()}
+          <HomeView
+            balance={balance}
+            showModal={() => {
+              setModalVisible(true);
+              setStatus(STATUS_SEARCH);
+            }}
+          />
+        </>
       ) : (
-        <h1 className="text-5xl font-bold">Log in to use PAAY!</h1>
+        <>
+          <h1 className="text-5xl font-bold">Log in to use PAAY!</h1>
+          <div className="w-1/3">
+            <p className="text-xl font-semibold">What is PAAY?</p>
+            <p className="text-justify">
+              PAAY demonstrates the Rundler and Paymaster functionality of the
+              Alchemy Account Abstraction SDK. Sign up to create a smart
+              contract wallet and immediately begin sending tokens. No gas fees,
+              no external wallet custody.
+            </p>
+            <br></br>
+            <p className="text-justify">
+              <a
+                href="https://docs.alchemy.com/reference/account-abstraction-sdk"
+                className="text-[#445dea]"
+              >
+                Click here
+              </a>{" "}
+              to read more about the AA SDK and begin building!
+            </p>
+          </div>
+        </>
       )}
-      <HomeView
-        balance={balance}
-        showModal={() => {
-          setModalVisible(true);
-          setStatus(STATUS_SEARCH);
-        }}
-      />
     </div>
   );
 };
