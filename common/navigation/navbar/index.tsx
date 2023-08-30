@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@common/auth/AuthProvider";
+import alchemyLogo from "@public/assets/alchemy-logo.svg";
 import gonPfp from "@public/assets/gon_freecs.png";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,20 +37,22 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100 font-mono bg-[#232939]">
+    <div className="navbar bg-base-100 font-mono bg-[#232939] h-12">
       <div className="flex-1">
-        <button
+        {/* <button
           onClick={() => router.push("/")}
           className="btn btn-ghost normal-case text-xl text-white"
         >
           Alchemy Demo Dapp
-        </button>
-        <button
-          onClick={() => router.push("paay")}
-          className="btn btn-ghost normal-case text-xl text-gray-300"
-        >
-          PAAY
-        </button>
+        </button> */}
+        <Image
+          onClick={() => router.push("/")}
+          className="ml-1.5 cursor-pointer"
+          width={164}
+          height={100}
+          src={alchemyLogo}
+          alt="logo"
+        />
       </div>
       <div className="flex gap-2">
         {user?.isLoggedIn ? (
@@ -59,18 +62,13 @@ export default function Navbar() {
             {!isOnLoginPage ? (
               <button
                 onClick={() => router.push("/login")}
-                className="btn btn-primary"
+                className="btn hover:bg-[#4f6fdb] bg-[#324996] text-white"
               >
                 Login
               </button>
             ) : (
-              <button className="btn btn-primary" disabled>
-                Logged In
-              </button>
+              <button className="btn btn-primary">Logged In</button>
             )}
-            {/* <Link href={"/sign-up"}>
-              <div className="btn">Sign Up</div>
-            </Link> */}
           </div>
         )}
 
@@ -89,18 +87,13 @@ export default function Navbar() {
             tabIndex={0}
             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li onClick={handleLogout}>
-              <a>Logout</a>
-            </li>
+            {user?.isLoggedIn ? (
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>

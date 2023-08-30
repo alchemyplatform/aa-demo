@@ -1,5 +1,4 @@
 // contexts/AuthContext.tsx
-import { useRouter } from "next/navigation";
 import {
   ReactNode,
   createContext,
@@ -37,8 +36,6 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  // const { user, login } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     userbase
@@ -57,7 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             username: session.user.username,
             isLoggedIn: true,
           };
-          setUser(userInfo);
+          login(userInfo);
           console.log(
             "Logged out in the authprovider, here is the user " + user?.username
           );
