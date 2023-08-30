@@ -209,17 +209,17 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/4 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-1/4">
               <span className="text-xl font-semibold">Confirmed.</span>
               <div className="flex flex-col flex-1 justify-between mt-[20px]">
                 <a
-                  href={`https://etherscan.io/address/${hash}`}
+                  href={`https://www.jiffyscan.xyz/userOpHash/0xbbbe9d65322de5d01343e55cb5e8a501e640dc2db3d69b0d5ac632d6c543dd5a`}
                   className="btn bg-[#445dea] text-white"
                 >
-                  View on Etherscan
+                  View on Jiffyscan
                 </a>
                 <button
                   className="btn bg-[#6ed09f] text-white"
