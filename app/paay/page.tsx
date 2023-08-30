@@ -4,6 +4,7 @@ import { useAuth } from "@common/auth/AuthProvider";
 import "../globals.css";
 import Keypad from "@common/keypad";
 import { sendTx } from "contracts/utils/sendSponsoredTransaction";
+// TODO: import and connect a Smart Account Provider.
 
 const STATUS_NONE = "none";
 const STATUS_SEARCH = "search";
@@ -82,7 +83,7 @@ const SendScreen = () => {
   };
 
   // Do any transaction status handling here, right now just sets hash for
-  // Etherscan link.
+  // Jiffyscan link.
   const finishTx = (hash: string) => {
     setHash(hash);
     setStatus(STATUS_CONFIRMED);
