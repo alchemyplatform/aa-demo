@@ -1,8 +1,9 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@common/auth/AuthProvider";
 import "../globals.css";
 import Keypad from "@common/keypad";
+import { sendTx } from "contracts/utils/sendSponsoredTransaction";
 
 const STATUS_NONE = "none";
 const STATUS_SEARCH = "search";
@@ -13,7 +14,7 @@ const STATUS_CONFIRMED = "confirmed";
 
 const SendScreen = () => {
   const [amount, setAmount] = useState("");
-  const [balance, setBalance] = useState(106);
+  const [balance, setBalance] = useState(106); // TODO: Implement real balance.
   const [hash, setHash] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState("");
@@ -22,7 +23,7 @@ const SendScreen = () => {
 
   const [status, setStatus] = useState(STATUS_NONE);
 
-  /**************************** Helper functions *****************************/
+  /** Helper functions **/
   const textHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setSearch(event.currentTarget.value);
   };
@@ -44,7 +45,7 @@ const SendScreen = () => {
     setAmount("");
   };
 
-  /********* Step handler functions. One for each modal button click *********/
+  /** Step handler functions. One for each modal button click **/
   // Strips text input and sets as destination address for transaction.
   const selectUser = () => {
     const res = search.startsWith("0x") ? search.slice(2) : search;
@@ -65,18 +66,17 @@ const SendScreen = () => {
     setStatus(STATUS_SENDING);
     const recipientAdress = to;
 
-    // Sleeping to demonstrate loading view. Delete when tx implemented.
+    // TODO: Delete when transactions implemented.
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1000);
 
     // --------- Create the transaction object and send to userOp handler -----
-    // const payment: TransactionContext = {
-    //   passkeyProvider: walletProvider,
-    //   tokenAddress: "0x4c1A52719d507827F8A3353bD0Aaf85BCc5Ce9a9", // Address of token to send
-    //   recipientAddress: `0x${recipientAddress}`, // Gareth boutta be rich
-    //   amount: parseEther(`${parseFloat(amount)}`),
-    // };
-    // const hash = await sendSponsoredTransaction(payment);
+    // const hash = await sendTx(
+    //   walletProvider, --> TODO: create a walletProvider and get to component.
+    //   "0xtokenaddress", --> TODO: with address of ERC-20 to send
+    //   `0x${to}`, --> In state from text input.
+    //   `${parseFloat(amount)}` --> In state from number input
+    // );
 
     finishTx("hash");
   };
@@ -88,13 +88,14 @@ const SendScreen = () => {
     setStatus(STATUS_CONFIRMED);
   };
 
+  // Uses switch to render all stages of the Tx sending flow.
   const renderModal = () => {
     switch (status) {
       case STATUS_SEARCH:
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/2 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4">
@@ -123,7 +124,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-2/3 overflow-scroll">
@@ -152,7 +153,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-1/2 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-auto">
@@ -185,7 +186,7 @@ const SendScreen = () => {
         return (
           <>
             <div
-              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20 " /* Color is a grayscale of alice blue*/
+              className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
             <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-1/4">
@@ -234,6 +235,7 @@ const SendScreen = () => {
     }
   };
 
+  // Component for the landing view of the PAAY page.
   interface HomeViewProps {
     balance: number;
     showModal: () => void;
@@ -272,8 +274,8 @@ const SendScreen = () => {
     );
   };
 
+  // Main render. Depends on auth status and modal visible.
   return (
-    // Render
     <div className="display flex flex-col min-h-screen bg-base-200 justify-center items-center mt-[-48px] font-mono">
       {user?.isLoggedIn ? (
         <>

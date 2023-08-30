@@ -1,9 +1,4 @@
-import { RpcTransactionRequest, encodeFunctionData, etherUnits } from "viem";
 // import {SmartAccountProvider} from "@alchemy/aa-core";
-// import ERC20_ABI from "../ERC20.sol/ERC20.json";
-// import {ERC20ABI} from "../ERC20.sol/ERC20";
-// import {passkeyAccountABI} from "@alch-fam/shared";
-// import {ethers} from "ethers";
 
 /**** A simple file for sending tokens with a user op.
  * 1. @alchemy/aa-core and @alch-fam/shared must be installed in workspace.
@@ -12,10 +7,11 @@ import { RpcTransactionRequest, encodeFunctionData, etherUnits } from "viem";
  *
  * More info on
  * https://www.notion.so/alchemotion/AA-Demo-PAAY-Integration-a025cc243606419daa2e85feb66590e3?pvs=
- * Under the
+ * Under the Integration Guide
  */
+
 interface SmartAccountProvider {
-  // Interface only to silence warning.
+  // TODO: Remove this interface, only here to silence warning.
   sendUserOperation: (arg: any) => any;
 }
 
@@ -31,7 +27,7 @@ interface SendTransaction {
 }
 
 // Called by client, creates the TransactionContext object.
-export const sendTx = (
+export const sendTx = async (
   passkeyProvider: SmartAccountProvider,
   tokenAddress: `0x${string}`,
   recipientAddress: `0x${string}`,
@@ -43,7 +39,7 @@ export const sendTx = (
     recipientAddress: recipientAddress,
     amount: amount,
   };
-  return sendSponsoredTransaction(tx);
+  return await sendSponsoredTransaction(tx);
 };
 
 // Takes in context, sends transaction using sendUserOp().
@@ -55,11 +51,19 @@ const sendSponsoredTransaction: SendTransaction = async (
     throw new Error("Passkey provider is not set up");
   }
 
+  /*
+   * The data field in this call is empty. As implemented, this sendUserOperation()
+   * call will transfer the native token. In order to send ERC-20, you must encode
+   * the target ERC20 token, it's mint function, and it's parameters into the data field.
+   * I recommend first testing that sending native token works, which will verify
+   * your Smart Account Provider is properly connected. With the SAP working, switch
+   * to encoding function data.
+   */
   const op = await context.passkeyProvider.sendUserOperation({
     target: context.recipientAddress,
     data: "0x",
     value: context.amount,
   });
-  console.log("Hash" + op.hash);
+
   return op.hash;
 };
