@@ -127,7 +127,7 @@ const SendScreen = () => {
               className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
-            <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-2/3 overflow-scroll">
+            <div className="absolute flex text-center flex-col w-auto bg-[#FFFFFF] rounded-2xl p-4 h-auto overflow-scroll">
               <h1 className="text-xl font-semibold">Choose amount</h1>
               <div className="flex flex-col flex-1 items-center">
                 <input
@@ -140,7 +140,7 @@ const SendScreen = () => {
                 ></input>
                 <Keypad onClick={keypadHandler}></Keypad>
                 <button
-                  className="btn btn-primary min-w-[262px]"
+                  className="btn btn-primary min-w-[262px] m-5"
                   onClick={chooseAmount}
                 >
                   Send
@@ -213,17 +213,17 @@ const SendScreen = () => {
               className="fixed top-0 left-0 w-full h-full bg-[#4b4d4f] opacity-20"
               onClick={closeModal}
             />
-            <div className="absolute flex text-center flex-col w-1/4 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-1/4">
+            <div className="absolute flex text-center flex-col w-1/4 bg-[#FFFFFF] rounded-2xl overflow-scroll p-4 h-auto">
               <span className="text-xl font-semibold">Confirmed.</span>
               <div className="flex flex-col flex-1 justify-between mt-[20px]">
                 <a
-                  href={`https://www.jiffyscan.xyz/userOpHash/0xbbbe9d65322de5d01343e55cb5e8a501e640dc2db3d69b0d5ac632d6c543dd5a`}
-                  className="btn bg-[#445dea] text-white"
+                  href={`https://www.jiffyscan.xyz/userOpHash/${hash}`}
+                  className="btn bg-[#445dea] text-white m-2"
                 >
                   View on Jiffyscan
                 </a>
                 <button
-                  className="btn bg-[#6ed09f] text-white"
+                  className="btn bg-[#6ed09f] text-white m-2"
                   onClick={closeModal}
                 >
                   Done
