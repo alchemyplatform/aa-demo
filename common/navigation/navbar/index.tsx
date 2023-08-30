@@ -56,7 +56,7 @@ export default function Navbar() {
       </div>
       <div className="flex gap-2">
         {user?.isLoggedIn ? (
-          ""
+          <button className="btn btn-primary">Logged In</button>
         ) : (
           <div className="flex gap-2">
             {!isOnLoginPage ? (
@@ -67,7 +67,7 @@ export default function Navbar() {
                 Login
               </button>
             ) : (
-              <button className="btn btn-primary">Logged In</button>
+              ""
             )}
           </div>
         )}
