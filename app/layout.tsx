@@ -9,7 +9,7 @@ const config = createConfig(
   getDefaultConfig({
     // Required API Keys
     alchemyId: process.env.ALCHEMY_API_KEY,
-    walletConnectProjectId: process.env.CONNECT_KIT_PROJECT_ID!,
+    walletConnectProjectId: process.env.WALLET_CONNECT_PROJECT_ID!,
 
     // Required
     appName: "AA Demo written by Alchemy internal team",

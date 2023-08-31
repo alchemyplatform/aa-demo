@@ -1,9 +1,11 @@
 import chevronLeft from "@public/assets/chevron-left.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Drawer() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const router = useRouter();
 
   return (
     <div className="relative min-h-screen font-mono">
@@ -21,15 +23,25 @@ export default function Drawer() {
           <div>
             <div className="flex items-center justify-center mt-2">
               <button
-                // onClick={() => router.push("/")}
+                onClick={() => router.push("/")}
                 className="btn btn-ghost normal-case text-xl text-white"
               >
                 Alchemy Demo Dapp
               </button>
             </div>
             <div className="flex flex-col">
-              <div className="mt-2 btn rounded-none">NFT Minter</div>
-              <div className="btn rounded-none">PAAY</div>
+              <div
+                onClick={() => router.push("/nft-minter")}
+                className="mt-2 btn rounded-none"
+              >
+                NFT Minter
+              </div>
+              <div
+                onClick={() => router.push("/paay")}
+                className="btn rounded-none"
+              >
+                PAAY
+              </div>
             </div>
           </div>
           {drawerOpen && (

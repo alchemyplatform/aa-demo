@@ -72,20 +72,26 @@ export default function Navbar() {
           </div>
         )}
 
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+        <div
+          className={`dropdown dropdown-end ${
+            user?.isLoggedIn ? "visible" : "hidden"
+          }`}
+        >
+          <label
+            tabIndex={0}
+            className={`btn btn-ghost btn-circle avatar ${
+              user?.isLoggedIn ? "" : "cursor-default"
+            }`}
+          >
             <div className="w-10 rounded-full">
-              {/* {user?.username ? (
-                <Hashicon value={user?.username} />
-              ) : (
-                <Hashicon value={"Not logged in."} />
-              )} */}
               <Image src={gonPfp} alt="gon-freecs" />
             </div>
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+            className={`mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 ${
+              user?.isLoggedIn ? "" : "hidden"
+            }`}
           >
             {user?.isLoggedIn ? (
               <li onClick={handleLogout}>

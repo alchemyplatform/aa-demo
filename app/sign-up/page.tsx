@@ -31,22 +31,7 @@ export default function SignupForm() {
       };
       const privKey = secp.utils.randomPrivateKey();
       const privKeyHex = secp.etc.bytesToHex(privKey);
-      // deploy SCW
-      // CREATE 2
-      // use simpleAccount
-
-      // do simple account for this demo
-      // use EOA
-      // store the EOA on userbase
-      // should be able to generate the counterfactual
-      // EIP-1271
-
-      // store SCW address when deployed
-      // store version
-
-      // then, when it's on a new version - we can read that and deploy a brand new one
-
-      // understand the one way door: 
+  
       await userbase.signUp({
         username,
         password,
