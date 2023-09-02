@@ -11,6 +11,7 @@ import userbase from "userbase-js";
 interface User {
   username: string;
   isLoggedIn: boolean;
+  userId: string;
   // ... other user properties ...
 }
 
@@ -50,9 +51,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
           console.log(
             `Userbase login succesful. ✅ Welcome, ${session.user.username}!`
           );
+          console.log(session.user);
           const userInfo = {
             username: session.user.username,
             isLoggedIn: true,
+            userId: session.user.userId,
           };
           login(userInfo);
           console.log(

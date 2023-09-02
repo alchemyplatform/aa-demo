@@ -3,7 +3,7 @@ import { AuthProvider } from "@common/auth/AuthProvider";
 import Navbar from "@common/navigation/navbar";
 import Drawer from "@common/utils/Drawer";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { WagmiConfig, createConfig } from "wagmi";
+import { WagmiConfig, createConfig, sepolia } from "wagmi";
 
 const config = createConfig(
   getDefaultConfig({
@@ -13,6 +13,7 @@ const config = createConfig(
 
     // Required
     appName: "AA Demo written by Alchemy internal team",
+    chains: [sepolia],
 
     // Optional
     appDescription:

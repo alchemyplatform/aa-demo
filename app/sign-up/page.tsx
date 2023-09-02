@@ -25,14 +25,10 @@ export default function SignupForm() {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const userInfo = {
-        username: username,
-        isLoggedIn: true,
-      };
       const privKey = secp.utils.randomPrivateKey();
       const privKeyHex = secp.etc.bytesToHex(privKey);
-  
-      await userbase.signUp({
+
+      const response = await userbase.signUp({
         username,
         password,
         rememberMe: "local",
@@ -42,6 +38,37 @@ export default function SignupForm() {
           pk: privKeyHex,
         },
       });
+
+      // 1. algorithm that computes pk deterministically
+      // pk never leaves user's computer, stored in browser
+      // drawback:
+
+      // safer than the db ->
+
+      
+
+      // 2. use a browser feature that lets you sign
+      
+      // they have a password that they can't change but pk is generated from pw
+      // check hash of code to make sure no tampering
+
+      //
+
+      console.log("IN SIGN UPPPPP");
+
+      // instead of the actual pk
+      // hash it, encrypt it
+      // if user is logged in, decode it
+
+      // hash it with SHA3 - no one would be able to decode it
+      //
+
+      const userInfo = {
+        username: username,
+        isLoggedIn: true,
+        userId: response.userId,
+      };
+
       login(userInfo);
       router.push("/?signup=success");
     } catch (error: any) {

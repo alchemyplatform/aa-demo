@@ -25,18 +25,42 @@ export default function LoginForm() {
     setIsLoading(true);
     e.preventDefault();
     try {
-      await userbase.signIn({
+      const response = await userbase.signIn({
         username,
         password,
         rememberMe: "local",
       });
+
+      console.log("In the login form rn");
+      console.log(response);
       const userInfo = {
         username: username,
         isLoggedIn: true,
+        userId: response.userId,
       };
       login(userInfo);
+      const data = {
+        userId: response.userId,
+      };
+      const response2 = await fetch("/api/admin/get-user/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log("some data");
+      console.log(await response2.json());
+
+      // 1. deploy a simple NFT contract
+      // 2. mint an NFT from that contract to user's SCW
+
+      // we want to send a UserOp which mints the NFT to user's SCW
+
       // deploySCW();
       // CREATE 2 deterministic addres gen?
+
+
       router.push("/?login=success");
       console.log(`Userbase login succesful. ✅ Welcome, ${username}!`);
     } catch (error: any) {
