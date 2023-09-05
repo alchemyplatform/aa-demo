@@ -37,6 +37,7 @@ export default function LoginForm() {
         username: username,
         isLoggedIn: true,
         userId: response.userId,
+        userScwAddress: response.profile?.scwAddress,
       };
       login(userInfo);
       const data = {
@@ -60,10 +61,10 @@ export default function LoginForm() {
       // deploySCW();
       // CREATE 2 deterministic addres gen?
 
-
       router.push("/?login=success");
       console.log(`Userbase login succesful. ✅ Welcome, ${username}!`);
     } catch (error: any) {
+      console.log("does this get hi???");
       setIsLoading(false);
       setError(error.message || "An unexpected error occurred."); // Update the error state
       console.error(error);
@@ -122,13 +123,21 @@ export default function LoginForm() {
               </div>
               {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
               <div className="flex items-center justify-between">
-                <button
+                {/* <button
                   onClick={() => router.push("/sign-up")}
                   className="btn bg-[#445dea] text-white"
                 >
                   Sign Up
+                </button> */}
+                <div
+                  className="p-1 cursor-pointer hover:text-[blue]"
+                  onClick={() => router.push("/sign-up")}
+                >
+                  No account yet?
+                </div>
+                <button onClick={handleLogin} className="btn">
+                  Login
                 </button>
-                <button className="btn">Login</button>
               </div>
             </form>
           </div>

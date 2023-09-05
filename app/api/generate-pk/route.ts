@@ -1,17 +1,18 @@
+import { createSigner } from "@common/aa/createSigner";
 import * as secp from "@noble/secp256k1";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   console.log(process.env.ALCHEMY_API_KEY);
   const body = await request.json();
 
   const privKey = secp.utils.randomPrivateKey();
-  // const privKeyHex = secp.etc.bytesToHex(privKey);
+  const privKeyHex = secp.etc.bytesToHex(privKey);
 
-  // const { username, password, userbase } = body;
-  // console.log(userbase);
+  const userSigner = await createSigner(privKeyHex);
 
-  console.log("hello from the server");
+  const ownerAccount = userSigner.account;
+  const ownerAddress = (ownerAccount as any).owner.owner.addres;
 
-  // console.log(userResponse);
+  return NextResponse.json({ ownerAddress: ownerAddress });
 }

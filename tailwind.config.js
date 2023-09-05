@@ -2,9 +2,6 @@
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./common/**/*.{js,ts,jsx,tsx,mdx}",
     "./public/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -16,20 +13,9 @@ module.exports = {
       decorativeGreen: "#73FCC2",
     }),
     extend: {
-      fontFamily: {
-        NeueMontrealRegular: ["PPNeauMontreal-Regular", "Helvetica"],
-        NeueMontrealSemiBold: ["PPNeueMontreal-SemiBold", "Helvetica"],
-        NeueMontrealBold: ["PPNeueMontreal-Bold", "Helvetica"],
-        PublicSansRegular: ["PublicSans-Regular", "Helvetica"],
-        PublicSansBold: ["PublicSans-Bold", "Helvetica"],
-      },
       colors: {
         decorativeGreen: "#73FCC2",
         buttonTextBlack: "#020617",
-      },
-      boxShadow: {
-        bannerShadow:
-          "0px 0px 0px 0px rgba(132, 230, 192, 0.10), 0px 44px 97px 0px rgba(132, 230, 192, 0.10), 0px 176px 176px 0px rgba(132, 230, 192, 0.09), 0px 396px 238px 0px rgba(132, 230, 192, 0.05), 0px 704px 282px 0px rgba(132, 230, 192, 0.01), 0px 1100px 308px 0px rgba(132, 230, 192, 0.00);",
       },
     },
   },
@@ -37,7 +23,6 @@ module.exports = {
     themes: [
       "light",
       "dark",
-      "cupcake",
       "emerald",
       {
         mytheme: {

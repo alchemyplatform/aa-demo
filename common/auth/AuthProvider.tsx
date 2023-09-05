@@ -12,6 +12,7 @@ interface User {
   username: string;
   isLoggedIn: boolean;
   userId: string;
+  scwAddress?: string;
   // ... other user properties ...
 }
 
@@ -37,7 +38,6 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-
   useEffect(() => {
     userbase
       .init({
@@ -56,6 +56,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             username: session.user.username,
             isLoggedIn: true,
             userId: session.user.userId,
+            scwAddress: session.user.profile.scwAddress,
           };
           login(userInfo);
           console.log(

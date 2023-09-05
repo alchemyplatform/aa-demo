@@ -1,30 +1,70 @@
 "use client";
 import { useAuth } from "@common/auth/AuthProvider";
+import Minter from "@common/nft/Minter";
+import WalletDisplay from "@common/nft/WalletDisplay";
+import { AvatarGenerator } from "random-avatar-generator";
+import { useState } from "react";
 import "../globals.css";
 
-export default async function NftMinter() {
-  const { user, login } = useAuth();
+export default function NftMinter() {
+  const { user } = useAuth();
+  const [buttonToggle, setButtonToggle] = useState(true);
+  const generator = new AvatarGenerator();
 
-  async function handleClick() {
-    const data = {
-      userAddress: user?.userId,
-    };
-    const response = await fetch("/api/mint-user-op/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const messageResponse = await response.json();
-  }
-
-  // setSecretMessage(messageResponse.message);
   return (
     <div>
-      <div className="btn" onClick={handleClick}>
-        Click Me for Test
-      </div>
+      {user?.isLoggedIn ? (
+        <div className="font-mono text-2xl mt-8">
+          <div className="flex items-center">
+            <div className="avatar">
+              <div className="rounded-full ml-12">
+                <img src={generator.generateRandomAvatar(user?.userId)} />
+              </div>
+            </div>
+            <div className="flex flex-col ml-6 gap-2">
+              <div className="bg-base-300">
+                <b>User:</b> {user?.username}
+              </div>
+              <div className="bg-base-300">
+                <b>SCW :</b>{" "}
+                <a
+                  className="link link-secondary"
+                  href={`https://sepolia.etherscan.io/address/${user?.scwAddress}`}
+                  target="_blank"
+                >
+                  {user?.scwAddress}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="tabs items-center flex justify-center mb-[-25px]">
+            <a
+              className={`tab tab-lg tab-lifted text-2xl ${
+                buttonToggle ? "tab-active" : ""
+              }`}
+              onClick={() => setButtonToggle(!buttonToggle)}
+            >
+              Your Wallet
+            </a>
+            <a
+              className={`tab tab-lg tab-lifted text-2xl ${
+                buttonToggle ? "" : "tab-active"
+              }`}
+              onClick={() => setButtonToggle(!buttonToggle)}
+            >
+              Mint an NFT
+            </a>
+          </div>
+          <div className="divider mx-16 mb-8"></div>
+          {buttonToggle ? <WalletDisplay /> : <Minter />}
+        </div>
+      ) : (
+        <div>
+          <div className="flex flex-col items-center justify-center mt-36 mx-8 text-4xl font-mono">
+            Please log in to continue! 👀
+          </div>
+        </div>
+      )}
     </div>
   );
 }

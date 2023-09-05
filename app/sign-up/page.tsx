@@ -1,6 +1,9 @@
 "use client";
+import { createSigner } from "@common/aa/createSigner";
 import { useAuth } from "@common/auth/AuthProvider";
 import Loader from "@common/utils/Loader";
+import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
+import { publicClient } from "@common/utils/client";
 import * as secp from "@noble/secp256k1";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,8 +28,25 @@ export default function SignupForm() {
     setIsLoading(true);
     e.preventDefault();
     try {
+      // all of this should be server-side
       const privKey = secp.utils.randomPrivateKey();
       const privKeyHex = secp.etc.bytesToHex(privKey);
+
+      const userSigner = await createSigner(privKeyHex);
+
+      const ownerAccount = userSigner.account;
+      const ownerAddress = (ownerAccount as any).owner.owner.address;
+
+      // const userScwAddress: string = "your_scw_address_here";
+
+      const userScwAddress: string = (await publicClient.readContract({
+        address: "0x9406Cc6185a346906296840746125a0E44976454", // simple factory addr
+        abi: simpleFactoryAbi,
+        functionName: "getAddress",
+        args: [ownerAddress, 0],
+      })) as string;
+
+      console.log("User SCW address is: ", userScwAddress);
 
       const response = await userbase.signUp({
         username,
@@ -34,39 +54,17 @@ export default function SignupForm() {
         rememberMe: "local",
         email: "client@nyu.edu",
         profile: {
-          hello: "some random data about this user...",
+          scwAddress: userScwAddress,
           pk: privKeyHex,
+          v: "1", // version 1 indicates an acct created under pk -> simpleFactory
         },
       });
-
-      // 1. algorithm that computes pk deterministically
-      // pk never leaves user's computer, stored in browser
-      // drawback:
-
-      // safer than the db ->
-
-      
-
-      // 2. use a browser feature that lets you sign
-      
-      // they have a password that they can't change but pk is generated from pw
-      // check hash of code to make sure no tampering
-
-      //
-
-      console.log("IN SIGN UPPPPP");
-
-      // instead of the actual pk
-      // hash it, encrypt it
-      // if user is logged in, decode it
-
-      // hash it with SHA3 - no one would be able to decode it
-      //
 
       const userInfo = {
         username: username,
         isLoggedIn: true,
         userId: response.userId,
+        scwAddress: userScwAddress,
       };
 
       login(userInfo);

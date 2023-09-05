@@ -1,10 +1,9 @@
 "use client";
 
 import { useAuth } from "@common/auth/AuthProvider";
-import alchemyLogo from "@public/assets/alchemy-logo.svg";
-import gonPfp from "@public/assets/gon_freecs.png";
-import Image from "next/image";
+// import alchemyLogo from "@public/assets/alchemy-logo.svg";
 import { usePathname, useRouter } from "next/navigation";
+import { AvatarGenerator } from "random-avatar-generator";
 import { useEffect, useState } from "react";
 import userbase from "userbase-js";
 
@@ -15,6 +14,7 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isOnLoginPage, setIsOnLoginPage] = useState(false);
+  const generator = new AvatarGenerator();
 
   useEffect(() => {
     setIsOnLoginPage(pathname === "/login");
@@ -38,22 +38,7 @@ export default function Navbar() {
 
   return (
     <div className="navbar bg-base-100 font-mono bg-[#232939] h-12">
-      <div className="flex-1">
-        {/* <button
-          onClick={() => router.push("/")}
-          className="btn btn-ghost normal-case text-xl text-white"
-        >
-          Alchemy Demo Dapp
-        </button> */}
-        <Image
-          onClick={() => router.push("/")}
-          className="ml-1.5 cursor-pointer"
-          width={164}
-          height={100}
-          src={alchemyLogo}
-          alt="logo"
-        />
-      </div>
+      <div className="flex-1"></div>
       <div className="flex gap-2">
         {user?.isLoggedIn ? (
           <button className="btn btn-primary">Logged In</button>
@@ -84,7 +69,7 @@ export default function Navbar() {
             }`}
           >
             <div className="w-10 rounded-full">
-              <Image src={gonPfp} alt="gon-freecs" />
+              <img src={generator.generateRandomAvatar(user?.userId)} />
             </div>
           </label>
           <ul

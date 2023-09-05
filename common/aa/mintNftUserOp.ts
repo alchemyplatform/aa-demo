@@ -1,7 +1,7 @@
 import alchemyAbi from "@common/utils/abi/Alchemy.json";
 import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
+import { publicClient } from "@common/utils/client";
 import { encodeFunctionData, parseEther } from "viem";
-import { publicClient } from "./client";
 import { createSigner } from "./createSigner";
 
 /**
@@ -12,8 +12,9 @@ export async function mintNftUserOp(USER_PRIV_KEY: any) {
   console.log(process.env);
   const signer = await createSigner(USER_PRIV_KEY);
 
-  const ownerAddress = signer.account.owner.owner.address;
-  const userSCWAddress = await publicClient.readContract({
+  const ownerAccount = signer.account;
+  const ownerAddress = (ownerAccount as any).owner.owner.address;
+  const userScwAddress = await publicClient.readContract({
     address: "0x9406Cc6185a346906296840746125a0E44976454",
     abi: simpleFactoryAbi,
     functionName: "getAddress",
@@ -25,7 +26,7 @@ export async function mintNftUserOp(USER_PRIV_KEY: any) {
   const data = encodeFunctionData({
     abi: alchemyAbi,
     functionName: "mint",
-    args: [userSCWAddress], // User's SCW
+    args: [userScwAddress], // User's SCW
   });
 
   // const result: SendUserOperationResult = await signer.sendUserOperation({
