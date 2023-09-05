@@ -3,7 +3,6 @@ import * as secp from "@noble/secp256k1";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  console.log(process.env.ALCHEMY_API_KEY);
   const body = await request.json();
 
   const privKey = secp.utils.randomPrivateKey();
