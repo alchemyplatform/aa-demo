@@ -45,37 +45,43 @@ export default function Hero({ showToast, toastMessage }: any) {
             </span>
           </div>
         ) : (
-          <div>
+          <div className="flex flex-col items-center justify-center">
             <div className="text-5xl font-bold">
-              Welcome to the AA demo dapp!
+              Account Abstraction Demo Dapp ⚡️
             </div>
-            <div className="mt-10 flex flex-col justify-between gap-4">
-              <button
-                onClick={() => router.push("/sign-up")}
-                className="btn bg-[#445dea] text-white"
-              >
-                Sign Up
-              </button>
-              <button
-                onClick={() => router.push("/login")}
-                className="btn bg-[#324996] text-white"
-              >
-                Login
-              </button>
+            <p className="mt-5">
+              This is your portal to the account abstraction dimension of
+              Ethereum. 🧙‍♂️
+            </p>
+            <p className="mt-2">
+              Experience sponsored transactions that allow you to mint, transfer
+              and burn 🔥 NFTs without the user paying for gas.
+            </p>
+            <div className="flex flex-col">
+              <div className="mt-8 mb-5 flex justify-between gap-4">
+                <button
+                  onClick={() => router.push("/login")}
+                  className="btn bg-[#324996] text-white"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => router.push("/sign-up")}
+                  className="btn bg-[#445dea] text-white"
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           </div>
         )}
-
-        <p className="mt-2 pt-6">This application uses:</p>
-        <ul>
-          <li>Userbase</li>
-          <li>Tailwind CSS</li>
-          <li>DaisyUI</li>
-          <li>Typescript</li>
-        </ul>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center">
         <Image src={aaDiagram} alt="diagram" />
+        <p className="text-sm mt-2 w-[70%] text-center">
+          Executor calls both a paymaster contract and a user's smart contract
+          wallet to determine if the user's transaction can be sponsored.
+        </p>
         {showToast && <Toast message={toastMessage} />}
       </div>
     </div>

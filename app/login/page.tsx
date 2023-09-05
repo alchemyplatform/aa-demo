@@ -130,7 +130,7 @@ export default function LoginForm() {
                   Sign Up
                 </button> */}
                 <div
-                  className="p-1 cursor-pointer hover:text-[blue]"
+                  className="link link-secondary cursor-pointer"
                   onClick={() => router.push("/sign-up")}
                 >
                   No account yet?

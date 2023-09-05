@@ -47,7 +47,7 @@ export default function Navbar() {
             {!isOnLoginPage ? (
               <button
                 onClick={() => router.push("/login")}
-                className="btn hover:bg-[#4f6fdb] bg-[#324996] text-white"
+                className="btn bg-[#324996] hover:bg-[#4f6fdb] text-white"
               >
                 Login
               </button>
