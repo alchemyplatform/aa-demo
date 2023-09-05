@@ -1,13 +1,11 @@
 import { useAuth } from "@common/auth/AuthProvider";
 import { useState } from "react";
 import Confetti from "react-confetti";
-import useWindowSize from "react-use/lib/useWindowSize";
 
 export default function Minter() {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [hasMinted, setHasMinted] = useState(false);
-  const { width, height } = useWindowSize();
 
   async function handleMint() {
     setIsLoading(true);
@@ -23,7 +21,7 @@ export default function Minter() {
       },
       body: JSON.stringify(data),
     });
-    //const messageResponse = await response.json();
+    setTimeout(() => {}, 10000); // 10 seconds
     setIsLoading(false);
     setHasMinted(true);
   }

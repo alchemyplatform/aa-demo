@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
 import { useAuth } from "@common/auth/AuthProvider";
-import "../globals.css";
 import Keypad from "@common/keypad";
-import { sendTx } from "contracts/utils/sendSponsoredTransaction";
+import React, { useState } from "react";
+import "../globals.css";
 // TODO: import and connect a Smart Account Provider.
 
 const STATUS_NONE = "none";
@@ -247,6 +246,10 @@ const SendScreen = () => {
         <div className="flex-row justify-center items-center">
           <h1 className="text-5xl font-bold">{balance}</h1>
         </div>
+        <p className="text-xl font-bold text-[red]">
+          This component is still WIP! Any functionality you see is purely dummy
+          code.
+        </p>
         <p className="text-xl font-bold">Alchemy PAAY Balance</p>
         <input
           className="btn btn-primary my-3"

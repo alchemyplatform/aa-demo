@@ -1,6 +1,5 @@
 "use client";
 import { AuthProvider } from "@common/auth/AuthProvider";
-import Navbar from "@common/navigation/navbar";
 import Drawer from "@common/utils/Drawer";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { WagmiConfig, createConfig, sepolia } from "wagmi";
@@ -36,7 +35,7 @@ export default function RootLayout({
             <body className="flex flex-row h-full">
               <Drawer />
               <div className="flex-grow">
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className="flex-grow">{children}</div>
                 {/* <Footer /> */}
               </div>

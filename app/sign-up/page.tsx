@@ -58,6 +58,8 @@ export default function SignupForm() {
         },
       });
 
+      // next: GOOGLE AUTH
+
       const userInfo = {
         username: username,
         isLoggedIn: true,

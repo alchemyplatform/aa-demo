@@ -1,14 +1,34 @@
+import { useAuth } from "@common/auth/AuthProvider";
 import alchemyLogo from "@public/assets/alchemy-logo.svg";
 import chevronLeft from "@public/assets/chevron-left.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AvatarGenerator } from "random-avatar-generator";
 import { useState } from "react";
-import { useWindowSize } from "react-use";
+import userbase from "userbase-js";
 
 export default function Drawer() {
+  const { user, logout } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(true);
   const router = useRouter();
-  const { width, height } = useWindowSize();
+  const generator = new AvatarGenerator();
+  const [, setError] = useState<string | null>(null);
+
+  function handleLogout() {
+    try {
+      userbase
+        .signOut()
+        .then(() => {
+          // user logged out
+          console.log("User logged out!");
+          logout();
+          router.push("/");
+        })
+        .catch((e: any) => console.error(e));
+    } catch (error: any) {
+      setError(error.message || "An unexpected error occurred."); // Update the error state
+    }
+  }
 
   return (
     <div className="relative font-mono">
@@ -54,7 +74,7 @@ export default function Drawer() {
                   PAAY
                 </div>
                 <div
-                  onClick={() => router.push("/paay")}
+                  // onClick={() => router.push("/paay")}
                   className="btn glass rounded-none text-white hover:text-black"
                 >
                   Native ETH Transfer
@@ -62,14 +82,53 @@ export default function Drawer() {
               </div>
             </div>
             {drawerOpen && (
-              <div className="mb-4 flex self-center">
-                <Image src={chevronLeft} alt="icon" className="mb-0.5 mr-0.5" />
-                <button
-                  className="transition-all ease-in-out duration-300 rounded-none h-16 font-mono text-white"
-                  onClick={() => setDrawerOpen(!drawerOpen)}
+              <div className="flex flex-col items-center justify-center">
+                <div
+                  className={`dropdown dropdown-top mb-3 hover:shadow-md cursor-pointer ${
+                    user?.isLoggedIn ? "visible" : "hidden"
+                  }`}
                 >
-                  Close Menu
-                </button>
+                  <label
+                    tabIndex={0}
+                    className={`btn btn-circle avatar ${
+                      user?.isLoggedIn ? "" : "cursor-default"
+                    }`}
+                  >
+                    <div className="w-64 rounded-full">
+                      <img src={generator.generateRandomAvatar(user?.userId)} />
+                    </div>
+                    <label className="text-white mt-1 cursor-pointer">
+                      {user?.username}
+                    </label>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className={`z-[1] shadow menu menu-sm dropdown-content bg-[white] rounded-box ml-[-18px] mb-2 ${
+                      user?.isLoggedIn ? "" : "hidden"
+                    }`}
+                  >
+                    {user?.isLoggedIn ? (
+                      <li className="text-black" onClick={handleLogout}>
+                        <a>Logout</a>
+                      </li>
+                    ) : (
+                      ""
+                    )}
+                  </ul>
+                </div>
+                <div className="mb-4 flex self-center">
+                  <Image
+                    src={chevronLeft}
+                    alt="icon"
+                    className="mb-0.5 mr-0.5"
+                  />
+                  <button
+                    className="transition-all ease-in-out duration-300 rounded-none h-16 font-mono text-white"
+                    onClick={() => setDrawerOpen(!drawerOpen)}
+                  >
+                    Close Menu
+                  </button>
+                </div>
               </div>
             )}
           </div>

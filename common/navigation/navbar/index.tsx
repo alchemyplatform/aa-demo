@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@common/auth/AuthProvider";
-// import alchemyLogo from "@public/assets/alchemy-logo.svg";
 import { usePathname, useRouter } from "next/navigation";
 import { AvatarGenerator } from "random-avatar-generator";
 import { useEffect, useState } from "react";
@@ -9,8 +8,8 @@ import userbase from "userbase-js";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [isOpen, setIsOpen] = useState(false);
+  const [, setError] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const [isOnLoginPage, setIsOnLoginPage] = useState(false);
@@ -68,7 +67,7 @@ export default function Navbar() {
               user?.isLoggedIn ? "" : "cursor-default"
             }`}
           >
-            <div className="w-10 rounded-full">
+            <div className="rounded-full">
               <img src={generator.generateRandomAvatar(user?.userId)} />
             </div>
           </label>

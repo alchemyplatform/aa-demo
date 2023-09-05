@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
   if (nameOfFunction == "mint") {
     params = userScwAddress;
   } else {
+    // "burn"
     params = tokenId;
   }
 
