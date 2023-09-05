@@ -13,6 +13,7 @@ interface Nft {
 
 interface Data {
   ownedNfts: Nft[];
+  length: number;
 }
 
 export default function WalletDisplay() {
@@ -76,7 +77,7 @@ export default function WalletDisplay() {
         <div className="flex items-center justify-center mt-[-350px]">
           <Loader />
         </div>
-      ) : ownedNftsArray ? (
+      ) : ownedNftsArray && ownedNftsArray.length >= 1 ? (
         <div className="flex flex-col items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-12 mb-6">
             {ownedNftsArray &&
@@ -133,7 +134,7 @@ export default function WalletDisplay() {
         </div>
       ) : (
         <div>
-          <div className="flex flex-col items-center justify-center mt-36 mx-8">
+          <div className="flex flex-col items-center justify-center mx-8 mt-32">
             Your smart contract wallet does not own any NFTs yet! 🤯
             <div className="flex mt-4">
               Mint one by selecting the <b>&nbsp;Mint an NFT&nbsp;</b> tab. ⬆️
