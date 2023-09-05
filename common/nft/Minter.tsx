@@ -46,7 +46,7 @@ export default function Minter() {
           </p>
           <div className="flex items-center justify-end">
             <div
-              className={`alert w-[50%] mr-4 ${
+              className={`alert w-[75%] mr-4 ${
                 hasMinted ? "visible" : "hidden"
               }`}
             >
@@ -63,7 +63,9 @@ export default function Minter() {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>NFT minted. ✅</span>
+              <div className="flex justify-end text-right">
+                <span>NFT minted. ✅</span>
+              </div>
             </div>
             <button className="btn btn-primary text-white" onClick={handleMint}>
               <span

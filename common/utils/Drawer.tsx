@@ -45,7 +45,7 @@ export default function Drawer() {
                   onClick={() => router.push("/nft-minter")}
                   className="btn glass rounded-none text-white hover:text-black"
                 >
-                  NFT Minter
+                  Gasless NFT Minter
                 </div>
                 <div
                   onClick={() => router.push("/paay")}
