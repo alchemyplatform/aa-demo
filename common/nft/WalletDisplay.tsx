@@ -36,6 +36,7 @@ export default function WalletDisplay() {
   }
 
   async function fetchUserNfts() {
+    setIsLoading(true);
     try {
       const data = { address: user?.scwAddress };
       const response = await fetch("/api/getUserNfts/", {
@@ -69,6 +70,7 @@ export default function WalletDisplay() {
       body: JSON.stringify(data),
     });
     setIsBurning(false);
+    fetchUserNfts();
   }
 
   return (

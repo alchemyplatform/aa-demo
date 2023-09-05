@@ -14,11 +14,6 @@ export async function POST(request: NextRequest) {
   const userResponseObject = await userResponse?.json();
   const pk = userResponseObject?.response?.profile?.pk;
 
-  if (pk) {
-    console.log("The user object pk");
-    console.log(pk);
-  }
-
   const signer = await createSigner(pk);
 
   const amountToSend: bigint = parseEther("0");

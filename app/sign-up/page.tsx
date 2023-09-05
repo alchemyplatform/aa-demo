@@ -37,8 +37,6 @@ export default function SignupForm() {
       const ownerAccount = userSigner.account;
       const ownerAddress = (ownerAccount as any).owner.owner.address;
 
-      // const userScwAddress: string = "your_scw_address_here";
-
       const userScwAddress: string = (await publicClient.readContract({
         address: "0x9406Cc6185a346906296840746125a0E44976454", // simple factory addr
         abi: simpleFactoryAbi,
