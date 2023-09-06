@@ -78,7 +78,7 @@ export default function Hero({ showToast, toastMessage }: any) {
       </div>
       <div className="flex flex-col items-center justify-center">
         <Image src={aaDiagram} alt="diagram" />
-        <p className="text-sm mt-2 w-[70%] text-center">
+        <p className="text-sm my-2 w-[70%] text-center">
           Executor calls both a paymaster contract and a user's smart contract
           wallet to determine if the user's transaction can be sponsored.
         </p>
