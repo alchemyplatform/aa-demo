@@ -5,24 +5,23 @@ import {
   SmartAccountProvider,
   type SimpleSmartAccountOwner,
 } from "@alchemy/aa-core";
-import * as dotenv from "dotenv";
+import { NextRequest, NextResponse } from "next/server";
 import { sepolia } from "viem/chains";
-dotenv.config();
 
-const ALCHEMY_API_URL =
-  "https://eth-sepolia.g.alchemy.com/v2/goSQbgxsETQW0xQlO6iCHpDmjmfjQFww";
+const ALCHEMY_API_URL = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_AA_API_KEY}`;
 
-const ENTRYPOINT_ADDRESS = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
-const SIMPLE_ACCOUNT_FACTORY_ADDRESS =
-  "0x9406Cc6185a346906296840746125a0E44976454";
+const ENTRYPOINT_ADDRESS = process.env
+  .SEPOLIA_ENTRYPOINT_ADDRESS as `0x${string}`;
+const SIMPLE_ACCOUNT_FACTORY_ADDRESS = process.env
+  .SEPOLIA_SIMPLE_ACCOUNT_FACTORY_ADDRESS as `0x${string}`;
 
-/**
- * @description Creates a smart contract account that can be used to send user operations.
- * @returns The smart contract account owner + provider, as a signer, that can be used to send user operations from the SCA
- */
-export async function createSigner(USER_PRIV_KEY: any) {
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+
+  const { pk } = body;
+
   const owner: SimpleSmartAccountOwner =
-    LocalAccountSigner.privateKeyToAccountSigner(`0x${USER_PRIV_KEY}`);
+    LocalAccountSigner.privateKeyToAccountSigner(`0x${pk}`);
 
   const chain = sepolia;
   const provider = new SmartAccountProvider(
@@ -49,9 +48,12 @@ export async function createSigner(USER_PRIV_KEY: any) {
 
   // [OPTIONAL] Use Alchemy Gas Manager
   signer = withAlchemyGasManager(signer, {
-    policyId: "51781d7c-1e0a-43b5-a755-7a2c22c3b6f8",
+    policyId: process.env.SEPOLIA_PAYMASTER_POLICY_ID!,
     entryPoint: ENTRYPOINT_ADDRESS,
   });
 
-  return signer;
+  const ownerAccount = signer.account;
+  const ownerAddress = (ownerAccount as any).owner.owner.address;
+
+  return NextResponse.json({ data: ownerAddress });
 }

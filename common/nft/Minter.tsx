@@ -14,6 +14,7 @@ export default function Minter() {
       userScwAddress: user?.scwAddress,
       nameOfFunction: "mint",
     };
+    
     await fetch("/api/nft-user-op/", {
       method: "POST",
       headers: {

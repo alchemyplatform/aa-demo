@@ -1,9 +1,16 @@
-import { SendUserOperationResult } from "@alchemy/aa-core";
-import { createSigner } from "@common/aa/createSigner";
+import { withAlchemyGasManager } from "@alchemy/aa-alchemy";
+import {
+  LocalAccountSigner,
+  SendUserOperationResult,
+  SimpleSmartAccountOwner,
+  SimpleSmartContractAccount,
+  SmartAccountProvider,
+} from "@alchemy/aa-core";
 import alchemyBurnableNftAbi from "@common/utils/abi/AlchemyBurnable.json";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseEther } from "viem";
+import { sepolia } from "viem/chains";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -86,4 +93,45 @@ async function getUser(userId: any) {
   } catch (error) {
     console.error("Error fetching user:", error);
   }
+}
+
+async function createSigner(USER_PRIV_KEY: any) {
+  const ALCHEMY_API_URL = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_AA_API_KEY}`;
+  const ENTRYPOINT_ADDRESS = process.env
+    .SEPOLIA_ENTRYPOINT_ADDRESS as `0x${string}`;
+  const SIMPLE_ACCOUNT_FACTORY_ADDRESS = process.env
+    .SEPOLIA_SIMPLE_ACCOUNT_FACTORY_ADDRESS as `0x${string}`;
+  const owner: SimpleSmartAccountOwner =
+    LocalAccountSigner.privateKeyToAccountSigner(`0x${USER_PRIV_KEY}`);
+
+  const chain = sepolia;
+  const provider = new SmartAccountProvider(
+    ALCHEMY_API_URL,
+    ENTRYPOINT_ADDRESS,
+    chain,
+    undefined,
+    {
+      txMaxRetries: 10,
+      txRetryIntervalMs: 5000,
+    }
+  );
+
+  let signer = provider.connect(
+    (rpcClient) =>
+      new SimpleSmartContractAccount({
+        entryPointAddress: ENTRYPOINT_ADDRESS,
+        chain,
+        owner,
+        factoryAddress: SIMPLE_ACCOUNT_FACTORY_ADDRESS,
+        rpcClient,
+      })
+  );
+
+  // [OPTIONAL] Use Alchemy Gas Manager
+  signer = withAlchemyGasManager(signer, {
+    policyId: process.env.SEPOLIA_PAYMASTER_POLICY_ID!,
+    entryPoint: ENTRYPOINT_ADDRESS,
+  });
+
+  return signer;
 }

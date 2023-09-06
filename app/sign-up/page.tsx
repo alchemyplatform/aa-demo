@@ -1,14 +1,13 @@
 "use client";
-import { createSigner } from "@common/aa/createSigner";
 import { useAuth } from "@common/auth/AuthProvider";
 import Loader from "@common/utils/Loader";
-import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
-import { publicClient } from "@common/utils/client";
 import * as secp from "@noble/secp256k1";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import userbase from "userbase-js";
 import "../globals.css";
+import { publicClient } from "@common/utils/client";
+import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
+import userbase from "userbase-js";
 
 export default function SignupForm() {
   const { user, login } = useAuth();
@@ -32,10 +31,25 @@ export default function SignupForm() {
       const privKey = secp.utils.randomPrivateKey();
       const privKeyHex = secp.etc.bytesToHex(privKey);
 
-      const userSigner = await createSigner(privKeyHex);
+      // const userSigner = await createSigner(privKeyHex);
 
-      const ownerAccount = userSigner.account;
-      const ownerAddress = (ownerAccount as any).owner.owner.address;
+      // const ownerAccount = userSigner.account;
+      // const ownerAddress = (ownerAccount as any).owner.owner.address;
+
+      const data = {
+        pk: privKeyHex,
+      };
+
+      const response1 = await fetch("/api/get-signer/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response1.json();
+      const ownerAddress = responseData.data; // access the signer object
 
       const userScwAddress: string = (await publicClient.readContract({
         address: "0x9406Cc6185a346906296840746125a0E44976454", // simple factory addr
@@ -44,9 +58,7 @@ export default function SignupForm() {
         args: [ownerAddress, 0],
       })) as string;
 
-      console.log("User SCW address is: ", userScwAddress);
-
-      const response = await userbase.signUp({
+      const response2 = await userbase.signUp({
         username,
         password,
         rememberMe: "local",
@@ -58,12 +70,10 @@ export default function SignupForm() {
         },
       });
 
-      // next: GOOGLE AUTH
-
       const userInfo = {
         username: username,
         isLoggedIn: true,
-        userId: response.userId,
+        userId: response2.userId,
         scwAddress: userScwAddress,
       };
 
