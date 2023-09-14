@@ -1,6 +1,6 @@
 "use client";
-// components/LoginForm.tsx
 import { useAuth } from "@common/auth/AuthProvider";
+import Banner from "@common/utils/Banner";
 import Loader from "@common/utils/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(true);
 
   useEffect(() => {
     if (user?.isLoggedIn) {
@@ -30,9 +31,6 @@ export default function LoginForm() {
         password,
         rememberMe: "local",
       });
-
-      console.log("In the login form rn");
-      console.log(response);
       const userInfo = {
         username: username,
         isLoggedIn: true,
@@ -40,35 +38,17 @@ export default function LoginForm() {
         userScwAddress: response.profile?.scwAddress,
       };
       login(userInfo);
-      const data = {
-        userId: response.userId,
-      };
-      const response2 = await fetch("/api/admin/get-user/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log("some data");
-      console.log(await response2.json());
-
-      // 1. deploy a simple NFT contract
-      // 2. mint an NFT from that contract to user's SCW
-
-      // we want to send a UserOp which mints the NFT to user's SCW
-
-      // deploySCW();
-      // CREATE 2 deterministic addres gen?
-
       router.push("/?login=success");
       console.log(`Userbase login succesful. ✅ Welcome, ${username}!`);
     } catch (error: any) {
-      console.log("does this get hi???");
       setIsLoading(false);
       setError(error.message || "An unexpected error occurred."); // Update the error state
       console.error(error);
     }
+  };
+
+  const handleDismiss = () => {
+    setBannerVisible(false);
   };
 
   return (
@@ -76,7 +56,8 @@ export default function LoginForm() {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center h-screen bg-gray-100 font-mono">
+          {bannerVisible && <Banner onDismiss={handleDismiss} />}
           <div className="w-full max-w-sm">
             <form
               className="bg-white rounded px-8 pt-6 pb-8 mb-24 font-mono"
@@ -123,12 +104,6 @@ export default function LoginForm() {
               </div>
               {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
               <div className="flex items-center justify-between">
-                {/* <button
-                  onClick={() => router.push("/sign-up")}
-                  className="btn bg-[#445dea] text-white"
-                >
-                  Sign Up
-                </button> */}
                 <div
                   className="link link-secondary cursor-pointer"
                   onClick={() => router.push("/sign-up")}

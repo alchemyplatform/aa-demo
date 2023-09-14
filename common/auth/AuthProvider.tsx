@@ -1,4 +1,3 @@
-// contexts/AuthContext.tsx
 import {
   ReactNode,
   createContext,
@@ -13,7 +12,6 @@ interface User {
   isLoggedIn: boolean;
   userId: string;
   scwAddress?: string;
-  // ... other user properties ...
 }
 
 interface AuthContextType {

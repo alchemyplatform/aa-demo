@@ -67,18 +67,12 @@ export default function Drawer() {
                 >
                   Gasless NFT Minter
                 </div>
-                <div
+                {/* <div
                   onClick={() => router.push("/paay")}
                   className="btn glass rounded-none text-white hover:text-black"
                 >
                   PAAY
-                </div>
-                <div
-                  // onClick={() => router.push("/paay")}
-                  className="btn glass rounded-none text-white hover:text-black"
-                >
-                  Native ETH Transfer
-                </div>
+                </div> */}
               </div>
             </div>
             {drawerOpen && (

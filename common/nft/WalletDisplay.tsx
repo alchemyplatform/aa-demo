@@ -39,7 +39,7 @@ export default function WalletDisplay() {
     setIsLoading(true);
     try {
       const data = { address: user?.scwAddress };
-      const response = await fetch("/api/getUserNfts/", {
+      const response = await fetch("/api/get-user-nfts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -47,7 +47,6 @@ export default function WalletDisplay() {
       const messageResponse = await response.json();
       console.log(messageResponse.data.ownedNfts);
       setOwnedNftsArray(messageResponse.data.ownedNfts);
-      console.log(ownedNftsArray);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching NFTs:", error);
@@ -64,7 +63,7 @@ export default function WalletDisplay() {
       nameOfFunction: "burn",
       tokenId: tokenId,
     };
-    const response = await fetch("/api/nft-user-op/", {
+    await fetch("/api/nft-user-op/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -92,9 +91,9 @@ export default function WalletDisplay() {
                   <figure>
                     <img
                       src={
-                        nft.media[0].gateway
-                          ? nft.media[0].gateway
-                          : nft.media[0].raw
+                        nft.tokenUri.gateway
+                          ? nft.tokenUri.gateway
+                          : nft.tokenUri.raw
                       }
                       alt="user nft image"
                       className="w-full max-h-[300px]"
@@ -106,8 +105,9 @@ export default function WalletDisplay() {
                       {truncateDescription(nft.description, 25)}
                     </p>
                     <div className="flex justify-end">
-                      {nft.contract.address ==
-                      "0x6ad1aa62564a58a4037b956f528015ab2187a250" ? (
+                      <div className="text-black text-lg"></div>
+                      {nft.contract.address.toLowerCase() ==
+                      "0x5700D74F864CE224fC5D39a715A744f8d1964429".toLowerCase() ? (
                         <button
                           className="btn btn-primary text-white"
                           onClick={burnNft}

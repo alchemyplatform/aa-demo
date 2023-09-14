@@ -1,13 +1,11 @@
 "use client";
 import { useAuth } from "@common/auth/AuthProvider";
 import Hero from "@common/hero/Hero";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./globals.css";
 
 export default function Home() {
   const { user, login } = useAuth();
-  const router = useRouter();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 

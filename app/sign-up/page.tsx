@@ -1,13 +1,14 @@
 "use client";
 import { useAuth } from "@common/auth/AuthProvider";
+import Banner from "@common/utils/Banner";
 import Loader from "@common/utils/Loader";
+import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
+import { publicClient } from "@common/utils/client";
 import * as secp from "@noble/secp256k1";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import "../globals.css";
-import { publicClient } from "@common/utils/client";
-import simpleFactoryAbi from "@common/utils/abi/SimpleFactory.json";
 import userbase from "userbase-js";
+import "../globals.css";
 
 export default function SignupForm() {
   const { user, login } = useAuth();
@@ -16,6 +17,7 @@ export default function SignupForm() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(true);
 
   useEffect(() => {
     if (user?.isLoggedIn) {
@@ -27,15 +29,9 @@ export default function SignupForm() {
     setIsLoading(true);
     e.preventDefault();
     try {
-      // all of this should be server-side
+      // all of this should ideally be server-side
       const privKey = secp.utils.randomPrivateKey();
       const privKeyHex = secp.etc.bytesToHex(privKey);
-
-      // const userSigner = await createSigner(privKeyHex);
-
-      // const ownerAccount = userSigner.account;
-      // const ownerAddress = (ownerAccount as any).owner.owner.address;
-
       const data = {
         pk: privKeyHex,
       };
@@ -86,12 +82,17 @@ export default function SignupForm() {
     }
   };
 
+  const handleDismiss = () => {
+    setBannerVisible(false);
+  };
+
   return (
     <div>
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center h-screen bg-gray-100 font-mono">
+          {bannerVisible && <Banner onDismiss={handleDismiss} />}
           <div className="w-full max-w-sm">
             <form
               className="bg-white rounded px-8 pt-6 pb-8 mb-24 font-mono"
@@ -136,6 +137,12 @@ export default function SignupForm() {
               </div>
               {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
               <div className="flex items-center justify-end">
+                <div
+                  className="link link-secondary cursor-pointer"
+                  onClick={() => router.push("/login")}
+                >
+                  Already have an account?
+                </div>
                 <button className="btn">Sign Up</button>
               </div>
             </form>

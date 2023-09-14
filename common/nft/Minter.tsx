@@ -14,7 +14,7 @@ export default function Minter() {
       userScwAddress: user?.scwAddress,
       nameOfFunction: "mint",
     };
-    
+
     await fetch("/api/nft-user-op/", {
       method: "POST",
       headers: {
@@ -32,13 +32,15 @@ export default function Minter() {
       <div className="card lg:card-side bg-base-100 shadow-xl w-[70%]">
         <figure>
           <img
-            src="https://alchemy.mypinata.cloud/ipfs/QmPbxeGcXhYQQNgsC6a36dDyYUcHgMLnGKnF8pVFmGsvqi"
+            src="https://github-production-user-asset-6210df.s3.amazonaws.com/83442423/267730896-dd9791c9-00b9-47ff-816d-0d626177909c.png"
             alt="sample nft"
           />
         </figure>
 
         <div className="card-body">
-          <h2 className="card-title text-2xl">Generic Bored Ape on Sepolia</h2>
+          <h2 className="card-title text-2xl">
+            Generic Pudgy Penguin on Sepolia
+          </h2>
           <p className="text-sm">
             You are about to mint a fake NFT purely for testing purposes. The
             NFT will be minted directly to your smart contract wallet!

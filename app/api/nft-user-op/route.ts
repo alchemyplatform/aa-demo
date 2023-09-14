@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   });
 
   const result: SendUserOperationResult = await signer.sendUserOperation({
-    target: "0x6ad1AA62564A58A4037b956f528015aB2187A250", // burnable nft contract address
+    target: "0x5700D74F864CE224fC5D39a715A744f8d1964429", // burnable nft contract address
     data: data,
     value: amountToSend,
   });
