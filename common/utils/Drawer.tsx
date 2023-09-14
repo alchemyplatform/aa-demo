@@ -129,7 +129,6 @@ export default function Drawer() {
         </div>
       </div>
 
-      {/* Open Sidebar Button outside the Drawer */}
       {!drawerOpen && (
         <button
           className="flex mb-2 ml-2 fixed bottom-0 left-0 z-20 transition-all ease-in-out duration-300 rounded-none"
