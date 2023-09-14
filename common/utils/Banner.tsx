@@ -32,7 +32,7 @@ const Banner: React.FC<BannerProps> = ({ onDismiss }) => {
         ></div>
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="text-sm leading-6 text-gray-900 text-center">
+        <p className="text-sm leading-6 text-white text-center">
           <strong className="font-semibold">⚠️ CAUTION ⚠️ </strong>
           This app is purely for <strong>testing and demo purposes ONLY</strong>
           , do not use mainnet funds to interact in any way! App works

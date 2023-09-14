@@ -239,8 +239,8 @@ export default function Hero({ showToast, toastMessage }: any) {
           <div className="card-body">
             <h2 className="card-title mt-4">Account Abstraction SDK</h2>
             <p>
-              Simplify Account Abstraction development using the aa-sdk, which
-              gives you programmatic access to all AA features.
+              Simplify Account Abstraction development using the aa-sdk,
+              superpowering your app tool suite.
             </p>
             <div className="card-actions justify-end">
               <a
