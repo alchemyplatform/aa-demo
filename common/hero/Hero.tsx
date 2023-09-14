@@ -86,7 +86,7 @@ export default function Hero({ showToast, toastMessage }: any) {
                 transfer and burn 🔥 NFTs without the user paying for gas.
               </p>
               <div className="flex flex-col">
-                <div className="mt-8 mb-5 flex justify-between gap-4">
+                <div className="mt-8 mb-2 flex justify-between gap-4">
                   <button
                     onClick={() => router.push("/login")}
                     className="btn bg-[#324996] text-white"
