@@ -35,8 +35,8 @@ const Banner: React.FC<BannerProps> = ({ onDismiss }) => {
         <p className="text-sm leading-6 text-gray-900 text-center">
           <strong className="font-semibold">⚠️ CAUTION ⚠️ </strong>
           This app is purely for <strong>testing and demo purposes ONLY</strong>
-          , do not use mainnet funds to interact in any way! App is exclusively
-          on Sepolia.
+          , do not use mainnet funds to interact in any way! App works
+          exclusively on Sepolia.
         </p>
       </div>
       <div className="flex flex-1 justify-end">

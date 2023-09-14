@@ -40,7 +40,7 @@ export default function Hero({ showToast, toastMessage }: any) {
   return (
     <div className="bg-base-200">
       {bannerVisible && <Banner onDismiss={handleDismiss} />}
-      <div className="p-20 pb-4 text-center">
+      <div className="p-12 pb-4 text-center">
         {user?.isLoggedIn ? (
           <div className="flex flex-col gap-6">
             <span className="text-5xl font-bold">
@@ -66,8 +66,8 @@ export default function Hero({ showToast, toastMessage }: any) {
             <span className="text-lg font-regular">
               <i>
                 Get started by selecting the <b>Gasless NFT Minter</b> on the
-                left navbar or check out AA resources below ⬇️.
-              </i>
+                left navbar or check out AA resources below.
+              </i>{" "}
             </span>
           </div>
         ) : (
@@ -277,7 +277,7 @@ export default function Hero({ showToast, toastMessage }: any) {
           </div>
         </div>
       </div>
-      <div className="text-[#fff]">Hi :)</div>
+      <div className="text-[#fff] my-4">Hi :)</div>
     </div>
   );
 }
