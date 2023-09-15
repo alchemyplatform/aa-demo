@@ -21,6 +21,9 @@ export default function WalletDisplay() {
   const [ownedNftsArray, setOwnedNftsArray] = useState<Data | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isBurning, setIsBurning] = useState(false);
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [transferNftTokenId, setTransferNftTokenId] = useState(-1);
+  const [isTransferring, setIsTransferring] = useState(false);
 
   useEffect(() => {
     fetchUserNfts();
@@ -72,6 +75,33 @@ export default function WalletDisplay() {
     fetchUserNfts();
   }
 
+  async function constructNftTransfer(
+    event: React.MouseEvent<HTMLButtonElement>
+  ) {
+    if (document) {
+      (document.getElementById("my_modal_2") as HTMLFormElement).showModal();
+    }
+    setTransferNftTokenId(Number(event.currentTarget.id));
+  }
+
+  async function finalizeNftTransfer() {
+    setIsTransferring(true);
+    const data = {
+      userId: user?.userId,
+      userScwAddress: user?.scwAddress,
+      nameOfFunction: "safeTransferFrom",
+      tokenId: transferNftTokenId,
+      recipientAddress: recipientAddress,
+    };
+    await fetch("/api/nft-user-op/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    setIsTransferring(false);
+    fetchUserNfts();
+  }
+
   return (
     <div>
       {isLoading ? (
@@ -104,32 +134,65 @@ export default function WalletDisplay() {
                     <p className="text-gray-600">
                       {truncateDescription(nft.description, 25)}
                     </p>
-                    <div className="flex justify-end">
-                      <div className="text-black text-lg"></div>
-                      {nft.contract.address.toLowerCase() ==
-                        "0x5700D74F864CE224fC5D39a715A744f8d1964429".toLowerCase() ||
-                      nft.contract.address.toLowerCase() ==
-                        "0xef70b32b484Bded392260f3d059de7Ec864790b6".toLowerCase() ? (
-                        <button
-                          className="btn btn-primary text-white"
-                          onClick={burnNft}
-                          id={nft.tokenId}
-                        >
-                          <span
-                            className={`${
-                              isBurning ? "loading loading-spinner" : "hidden"
-                            }`}
-                          ></span>
-                          {isBurning ? "🔥🔥 Burning 🔥🔥" : "Burn 🔥"}
-                        </button>
-                      ) : (
-                        <button
-                          id={nft.tokenId}
-                          className="btn btn-primary text-white"
-                        >
-                          Transfer
-                        </button>
-                      )}
+                    <div className="flex justify-between">
+                      <button
+                        className="btn btn-accent text-black"
+                        onClick={burnNft}
+                        id={nft.tokenId}
+                      >
+                        <span
+                          className={`${
+                            isBurning ? "loading loading-spinner" : "hidden"
+                          }`}
+                        ></span>
+                        {isBurning ? "🔥🔥 Burning 🔥🔥" : "Burn 🔥"}
+                      </button>
+                      <button
+                        className="btn btn-primary text-white"
+                        id={nft.tokenId}
+                        onClick={constructNftTransfer}
+                      >
+                        Transfer
+                      </button>
+                      <dialog id="my_modal_2" className="modal">
+                        <div className="modal-box">
+                          <h3 className="font-bold text-sm">
+                            Enter a Sepolia ETH address to send this NFT to:
+                          </h3>
+                          <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input input-bordered w-full mt-4"
+                            onChange={(e) =>
+                              setRecipientAddress(e.target.value)
+                            }
+                          />
+
+                          <div className="modal-action">
+                            <form method="dialog">
+                              <button
+                                id={nft.tokenId}
+                                onClick={finalizeNftTransfer}
+                                className="btn btn-primary text-white"
+                              >
+                                <span
+                                  className={`${
+                                    isBurning
+                                      ? "loading loading-spinner"
+                                      : "hidden"
+                                  }`}
+                                ></span>
+                                {isTransferring
+                                  ? "Transferring"
+                                  : "Transfer Now!"}
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                          <button>close</button>
+                        </form>
+                      </dialog>
                     </div>
                   </div>
                 </div>

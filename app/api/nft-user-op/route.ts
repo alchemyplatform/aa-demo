@@ -15,7 +15,8 @@ import { sepolia } from "viem/chains";
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  const { userId, userScwAddress, nameOfFunction, tokenId } = body;
+  const { userId, userScwAddress, nameOfFunction, tokenId, recipientAddress } =
+    body;
   // get user's pk from server
   const userResponse = await getUser(userId);
   const userResponseObject = await userResponse?.json();
@@ -25,21 +26,26 @@ export async function POST(request: NextRequest) {
 
   const amountToSend: bigint = parseEther("0");
 
-  let params;
+  let params = [];
   if (nameOfFunction == "mint") {
-    params = userScwAddress;
+    params = [userScwAddress];
   } else if (nameOfFunction == "burn") {
     // "burn"
-    params = tokenId;
+    params = [tokenId];
   } else {
+    params = [userScwAddress, recipientAddress, tokenId];
     // safeTransferFrom
-    
   }
+
+  console.log(nameOfFunction);
+  console.log(recipientAddress);
+  console.log(userScwAddress);
+  console.log(tokenId);
 
   const data = encodeFunctionData({
     abi: cryptoPunkMinterAbi,
     functionName: nameOfFunction,
-    args: [params], // User's Smart Contract Wallet Address
+    args: params,
   });
 
   const result: SendUserOperationResult = await signer.sendUserOperation({
@@ -47,13 +53,6 @@ export async function POST(request: NextRequest) {
     data: data,
     value: amountToSend,
   });
-
-  // sponsored ETH tx to Sahil's address
-  // const result: SendUserOperationResult = await signer.sendUserOperation({
-  //   target: "0xed6E997f5AF4456F1A1aac3DA5dEE5e904dFabE0", // nft contract address
-  //   data: "0x",
-  //   value: amountToSend,
-  // });
 
   console.log("User operation result: ", result);
 

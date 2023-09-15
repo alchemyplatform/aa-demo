@@ -2,6 +2,7 @@
 import { useAuth } from "@common/auth/AuthProvider";
 import Minter from "@common/nft/Minter";
 import WalletDisplay from "@common/nft/WalletDisplay";
+import Loader from "@common/utils/Loader";
 import { AvatarGenerator } from "random-avatar-generator";
 import { useState } from "react";
 import "../globals.css";
@@ -61,7 +62,7 @@ export default function NftMinter() {
       ) : (
         <div>
           <div className="flex flex-col items-center justify-center mt-36 mx-8 text-4xl font-mono">
-            Please log in to continue! 👀
+            <Loader />
           </div>
         </div>
       )}

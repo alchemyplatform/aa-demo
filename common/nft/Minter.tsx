@@ -29,7 +29,7 @@ export default function Minter() {
   return (
     <div className="flex items-center justify-center mt-12">
       {hasMinted ? <Confetti /> : ""}
-      <div className="card lg:card-side bg-base-100 shadow-xl w-[70%] mb-12">
+      <div className="card lg:card-side bg-base-100 shadow-xl w-[90%] mb-12">
         <figure>
           <img
             src="https://images.squarespace-cdn.com/content/v1/63a2ce0664014f2264b055d4/1675034726812-J28X5S3CQ0CK6PF57GIL/Screenshot+2021-11-21+at+20.52.21.png?format=1500w"
