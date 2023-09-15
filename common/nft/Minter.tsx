@@ -29,18 +29,16 @@ export default function Minter() {
   return (
     <div className="flex items-center justify-center mt-12">
       {hasMinted ? <Confetti /> : ""}
-      <div className="card lg:card-side bg-base-100 shadow-xl w-[70%]">
+      <div className="card lg:card-side bg-base-100 shadow-xl w-[70%] mb-12">
         <figure>
           <img
-            src="https://github-production-user-asset-6210df.s3.amazonaws.com/83442423/267730896-dd9791c9-00b9-47ff-816d-0d626177909c.png"
+            src="https://images.squarespace-cdn.com/content/v1/63a2ce0664014f2264b055d4/1675034726812-J28X5S3CQ0CK6PF57GIL/Screenshot+2021-11-21+at+20.52.21.png?format=1500w"
             alt="sample nft"
           />
         </figure>
 
         <div className="card-body">
-          <h2 className="card-title text-2xl">
-            Generic Pudgy Penguin on Sepolia
-          </h2>
+          <h2 className="card-title text-2xl">CryptoPunk on Sepolia</h2>
           <p className="text-sm">
             You are about to mint a fake NFT purely for testing purposes. The
             NFT will be minted directly to your smart contract wallet!
@@ -65,7 +63,7 @@ export default function Minter() {
                 />
               </svg>
               <div className="flex justify-end text-right">
-                <span>NFT minted. ✅</span>
+                <span className="flex whitespace-nowrap">NFT minted. ✅</span>
               </div>
             </div>
             <button className="btn btn-primary text-white" onClick={handleMint}>

@@ -34,10 +34,6 @@ a {
   margin: 0;
 }
 
-.blinking {
-  animation: cursorFlash 1s infinite;
-}
-
 /*===================*/
 /* FLOAT
 /*===================*/

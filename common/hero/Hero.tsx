@@ -4,7 +4,7 @@ import Loader from "@common/utils/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Hero({ showToast, toastMessage }: any) {
+export default function Hero() {
   const { user } = useAuth();
   const router = useRouter();
 

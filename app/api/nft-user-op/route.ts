@@ -6,7 +6,7 @@ import {
   SimpleSmartContractAccount,
   SmartAccountProvider,
 } from "@alchemy/aa-core";
-import alchemyBurnableNftAbi from "@common/utils/abi/AlchemyBurnable.json";
+import cryptoPunkMinterAbi from "@common/utils/abi/CryptoPunkMinter.json";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, parseEther } from "viem";
@@ -28,19 +28,22 @@ export async function POST(request: NextRequest) {
   let params;
   if (nameOfFunction == "mint") {
     params = userScwAddress;
-  } else {
+  } else if (nameOfFunction == "burn") {
     // "burn"
     params = tokenId;
+  } else {
+    // safeTransferFrom
+    
   }
 
   const data = encodeFunctionData({
-    abi: alchemyBurnableNftAbi,
+    abi: cryptoPunkMinterAbi,
     functionName: nameOfFunction,
     args: [params], // User's Smart Contract Wallet Address
   });
 
   const result: SendUserOperationResult = await signer.sendUserOperation({
-    target: "0x5700D74F864CE224fC5D39a715A744f8d1964429", // burnable nft contract address
+    target: "0xef70b32b484Bded392260f3d059de7Ec864790b6", // cryptopunk minter (burnable)
     data: data,
     value: amountToSend,
   });

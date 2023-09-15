@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="font-mono">
       <div>
-        <Hero showToast={showToast} message={toastMessage} />
+        <Hero />
       </div>
     </div>
   );

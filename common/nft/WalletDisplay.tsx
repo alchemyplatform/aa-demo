@@ -91,9 +91,9 @@ export default function WalletDisplay() {
                   <figure>
                     <img
                       src={
-                        nft.tokenUri.gateway
+                        nft.tokenUri && nft.tokenUri.gateway
                           ? nft.tokenUri.gateway
-                          : nft.tokenUri.raw
+                          : ""
                       }
                       alt="user nft image"
                       className="w-full max-h-[300px]"
@@ -107,7 +107,9 @@ export default function WalletDisplay() {
                     <div className="flex justify-end">
                       <div className="text-black text-lg"></div>
                       {nft.contract.address.toLowerCase() ==
-                      "0x5700D74F864CE224fC5D39a715A744f8d1964429".toLowerCase() ? (
+                        "0x5700D74F864CE224fC5D39a715A744f8d1964429".toLowerCase() ||
+                      nft.contract.address.toLowerCase() ==
+                        "0xef70b32b484Bded392260f3d059de7Ec864790b6".toLowerCase() ? (
                         <button
                           className="btn btn-primary text-white"
                           onClick={burnNft}
